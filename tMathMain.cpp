@@ -1,6 +1,5 @@
 #include <math.h>
-
-#define NO_DEBUG_LOG
+#include <iostream>
 
 #ifndef NO_DEBUG_LOG
 #define DBLOG(x) std::cout << x;
@@ -11,10 +10,13 @@
 
 long double root2(long double rootValue, double precision)
 {
-	/*input value to find root of. precision value, a double between 0 and 1 being the precision of how far your result may be off, this is calculated by division*/
+	/*input value to find root of. precision value, a double between 0 and 1 being the precision of how far your result may be off, max offset = 1 + division, min offset = 1 / max offset; */
 	long double currentValue = rootValue;
 	long double bisectValue;
-	bool isgood;
+	bool isgood = false;
+	float rMax, rMin;
+	rMax = 1 + precision;
+	rMin = 1 / rMax;
 
 	if (rootValue < 0)
 	{
@@ -32,7 +34,7 @@ long double root2(long double rootValue, double precision)
 			{
 				isgood = 1;
 			}
-			else if ((currentValue * currentValue / rootValue < 1 + precision) && (currentValue * currentValue / rootValue > 1 - precision))
+			else if ((currentValue * currentValue / rootValue < rMax) && (currentValue * currentValue / rootValue > rMin))
 			{
 				isgood = 1;
 			}
