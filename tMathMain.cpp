@@ -1,12 +1,26 @@
 #include <math.h>
 #include <iostream>
-
+#include <unistd.h>
 #ifndef NO_DEBUG_LOG
 #define DBLOG(x) std::cout << x;
 #endif
 #ifdef NO_DEBUG_LOG
 #define DBLOG(x) 
 #endif
+
+#ifndef DEBUG_SLEEP
+#define DEBUG_SLEEP(x) usleep(x);
+#endif
+#ifdef NO_DEBUG_SLEEP
+#define DEBUG_SLEEP(x)
+#endif
+
+/*TODO:
+make root2 work
+make root2 work with different variable types
+
+*/
+
 
 long double root2(long double rootValue, double precision)
 {
@@ -30,6 +44,8 @@ long double root2(long double rootValue, double precision)
 		bisectValue = currentValue;
 		while (!isgood)
 		{
+			DEBUG_SLEEP(50000)
+			DBLOG(currentValue << '\n')
 			if (currentValue * currentValue == rootValue)
 			{
 				isgood = 1;
@@ -51,4 +67,48 @@ long double root2(long double rootValue, double precision)
 		}
 	}
 	return currentValue;
+}
+
+int turnPositive(int input)
+{
+	if (input < 0)
+	{
+		return input * -1;
+	}
+	return input;
+}
+
+float turnPositive(float input)
+{
+	if (input < 0)
+	{
+		return input * -1;
+	}
+	return input;
+}
+
+double turnPositive(double input)
+{
+	if (input < 0)
+	{
+		return input * -1;
+	}
+	return input;
+}
+
+long double turnPositive(long double input)
+{
+	if (input < 0)
+	{
+		return input * -1;
+	}
+	return input;
+}
+long turnPositive(long input)
+{
+	if (input < 0)
+	{
+		return input * -1;
+	}
+	return input;
 }
